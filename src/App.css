@@ -1,0 +1,42 @@
+@import-normalize;
+.App {
+}
+
+.logo {
+    font-weight: 900;
+    font-size: 20px;
+    text-decoration:none;
+    color:black;
+}
+.topbar {
+    position: absolute;
+    top: 0px;
+    z-index: 10;
+}
+.topbar,
+.Navbar {
+    display: flex;
+    flex-direction: row;
+}
+.Navbar {
+    display:flex;
+    flex-direction:row;
+    justify-content:space-evenly;
+}
+.topbar > p,
+.Navbar > p {
+    height: 100%;
+}
+.Navbar > a { 
+    text-decoration:none;
+    color: black;
+}
+.topbar {
+    width: 100vw;
+    height: 5vh;
+    position: absolute;
+    background-color: lightgray;
+}
+.NavBarCategories:hover, .NavBarCart:hover, .NavBarSign-in:hover { 
+    background-color: gray;
+}
