@@ -2,18 +2,19 @@ import React from "react";
 import "./AllProductsComponent.css";
 import { useState, useEffect } from "react";
 
-export default function AllProductsComponent() {
+export default function AllProductsComponent(props) {
     const [items, setItems] = useState([]);
     function FetchData() {
-        fetch("https://fakestoreapi.com/products")
+        fetch(props.fetchLink)
             .then((res) => res.json())
             .then((data) => {
                 setItems(data);
+                console.log(data)
             });
     }
     useEffect(() => {
         FetchData();
-    }, []);
+    }, [props.fetchLink]);
     return (
         <section className="AllProductsComponent">
             {items.map((item) => {

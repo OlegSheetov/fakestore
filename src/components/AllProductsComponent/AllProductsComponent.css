@@ -1,19 +1,21 @@
 .AllProductsComponent {
-    width: 100vw;
     margin-top: 5vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content:space-evenly;
+    justify-content:center;
 }
 .ProductCard {
-    width: 20vw;
+    width: 13vw;
+    min-width:160px;
     height: 40vh;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 10px;
     background-color: lightgray;
+    border-radius: 10px;
 }
 .ProductCardImage {
     width: 100%;
@@ -21,4 +23,9 @@
     object-fit: contain;
 }
 .ProductCardText { 
+    overflow-y: auto; 
+    overflow-x: hidden;
+    box-sizing: border-box;
+    width: 90%;
+    
 }
