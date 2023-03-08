@@ -1,6 +1,6 @@
 @import-normalize;
 .App {
-    height: 85.6vh;
+    height: 100vh;
 }
 
 .logo {
@@ -11,18 +11,20 @@
     color: black;
     align-items:center;
 }
+
 .topbar {
     position: absolute;
     top: 0px;
     z-index: 10;
 }
-/* Поступил так потому что было бы не эстетично писать каждый раз*/
+
 .topbar,
 .Navbar,
 .Navbar > *,
 .logo {
     display: flex;
 }
+
 .Navbar {
     flex-direction: row;
     align-items: center;
@@ -34,6 +36,7 @@
     margin: 10px;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 .Navbar > *:hover {
     background: gray;

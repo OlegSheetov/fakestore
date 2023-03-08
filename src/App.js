@@ -2,16 +2,19 @@ import React, { Component } from "react";
 import "./App.css";
 import { HashRouter, Link, Routes, Route } from "react-router-dom";
 import AllProductsComponent from "./components/AllProductsComponent/AllProductsComponent";
-import LoginScreen from "./components/LoginScreen/LoginScreen";
 import RegistrationScreen from "./components/RegistrationScreen/RegistrationScreen";
-import CategoriesScreen from "./components/CategoriesScreen/CategoriesScreen";
+import ProductCart from "./components/ProductCart/ProductCart";
+import ProductDetail from "./components/ProductDetail/ProductDetail";
+
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             categories: [],
             fetchLink: "https://fakestoreapi.com/products",
+            ProductCard: [],
         };
+        this.AddToCard = this.AddToCard.bind(this);
     }
     componentDidMount() {
         const fetchCategories = fetch(
@@ -22,6 +25,14 @@ class App extends Component {
                 this.setState({ categories: json });
             });
     }
+    AddToCard(product) {
+        //this.state.ProductCard.push(product)
+        product.count = 1;
+        let Cart = [...this.state.ProductCard];
+        Cart.push(product);
+        this.setState({ ProductCard: Cart });
+    }
+
     render() {
         return (
             <HashRouter>
@@ -39,38 +50,20 @@ class App extends Component {
                             Fake shop
                         </Link>
                         <div className="Navbar">
-                            <div className="NavBarCategories">
-                                <p>Categories</p>
-                                <div>
+                            {this.state.categories.map((item) => {
+                                return (
                                     <p
+                                        key={item}
                                         onClick={() => {
                                             this.setState({
-                                                fetchLink:
-                                                    "https://fakestoreapi.com/products",
+                                                fetchLink: `https://fakestoreapi.com/products/category/${item}`,
                                             });
                                         }}
                                     >
-                                        All
+                                        {item}
                                     </p>
-                                    {this.state.categories.map((item) => {
-                                        return (
-                                            <p
-                                                key={item}
-                                                onClick={() => {
-                                                    this.setState({
-                                                        fetchLink: `https://fakestoreapi.com/products/category/${item}`,
-                                                    });
-                                                }}
-                                            >
-                                                {item}
-                                            </p>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                            <Link to="/Login" className="NavBarSign-in">
-                                Sign in
-                            </Link>
+                                );
+                            })}
                         </div>
                     </div>
                     <Routes>
@@ -79,17 +72,19 @@ class App extends Component {
                             element={
                                 <AllProductsComponent
                                     fetchLink={this.state.fetchLink}
+                                    AddToCard={this.AddToCard}
                                 />
                             }
                         ></Route>
-                        <Route path="/Login" element={<LoginScreen />}></Route>
                         <Route
                             path="/Register"
                             element={<RegistrationScreen />}
                         ></Route>
                         <Route
-                            path="/Categories"
-                            element={<CategoriesScreen />}
+                            path="/:Key"
+                            element={
+                                <ProductDetail AddToCard={this.AddToCard} />
+                            }
                         ></Route>
                     </Routes>
                 </div>

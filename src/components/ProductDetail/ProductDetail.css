@@ -1,0 +1,35 @@
+
+.ProductDetail{ 
+    height: 100%;
+    padding: 50px;
+    display:flex; 
+    flex-direction:row; 
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+}
+
+.ProductDetailImg{ 
+    width: 300px;
+}
+
+.ProductInformation { 
+    width: 50%;
+    margin:20px;
+}
+.ProductInformation > * { 
+    margin: 10px;
+}
+
+.ProductInformationTitle > h3, 
+.ProductInformationDescription > h4{ 
+    font-weight:600;
+}
+.ProductInformationTitle > p , 
+.ProductInformationDescription > p{ 
+    margin: 10px;
+}
+.ProductInformationPrice { 
+    font-weight: 1000;
+}
+

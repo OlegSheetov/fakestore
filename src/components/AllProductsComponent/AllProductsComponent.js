@@ -1,6 +1,7 @@
 import React from "react";
 import "./AllProductsComponent.css";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function AllProductsComponent(props) {
     const [items, setItems] = useState([]);
@@ -9,7 +10,6 @@ export default function AllProductsComponent(props) {
             .then((res) => res.json())
             .then((data) => {
                 setItems(data);
-                console.log(data)
             });
     }
     useEffect(() => {
@@ -19,17 +19,23 @@ export default function AllProductsComponent(props) {
         <section className="AllProductsComponent">
             {items.map((item) => {
                 return (
-                    <div className="ProductCard" key={item.id}>
-                        <img
-                            src={item.image}
-                            alt={item.title}
-                            className="ProductCardImage"
-                        />
-                        <div className="ProductCardText">
-                            <p>{item.title}</p>
-                            <p>Price:{item.price}</p>
+                    <Link to={`/${item.id}`} key={item.id} className="Link">
+                        <div className="ProductCard">
+                            <img
+                                src={item.image}
+                                alt={item.title}
+                                className="ProductCardImage"
+                            />
+                            <div className="ProductCardText">
+                                <p className="ProductCardTextTitle">
+                                    {item.title}
+                                </p>
+                                <p className="ProductCardTextPrice">
+                                    $ {item.price}
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 );
             })}
         </section>
