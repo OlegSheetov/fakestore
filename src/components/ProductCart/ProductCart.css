@@ -1,5 +1,38 @@
-
 .ProductCart{ 
-/*place style here */
+    display:flex; 
+    align-items:center;
+    justify-content:center;
+    box-sizing:border-box;
+    background-color: gray;
+    color: white;
+    cursor:pointer;
+}
+.ProductCartButton{ 
+    padding: 5px;
+    box-sizing:border-box;
+}
+.ProductCardWindow{ 
+    display:none;
+    background-color: lightgray;
+    position:absolute; 
+    top: 150%;
+    right: 20%;
+}
+.ProductCardItem{
+    display:flex;
+    flex-direction:row;
+}
+.ProductCardItem > * { 
+    width: 50%;
+}
+.ProductCardItem > div{ 
+    display:flex;
+    flex-direction:row;
+    margin:0px 10px;
+}
+
+.ProductCardItem > div > input { 
+    width:30px;
+    height:20px;
 }
 

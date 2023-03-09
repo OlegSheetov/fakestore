@@ -64,6 +64,7 @@ class App extends Component {
                                     </p>
                                 );
                             })}
+                        <ProductCart ProductCard ={this.state.ProductCard}/>
                         </div>
                     </div>
                     <Routes>
