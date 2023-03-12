@@ -15,6 +15,7 @@ class App extends Component {
             ProductCard: [],
         };
         this.AddToCard = this.AddToCard.bind(this);
+        this.checkThatProductInCart = this.checkThatProductInCart.bind(this);
     }
     componentDidMount() {
         const fetchCategories = fetch(
@@ -26,11 +27,29 @@ class App extends Component {
             });
     }
     AddToCard(product) {
-        //this.state.ProductCard.push(product)
-        product.count = 1;
-        let Cart = [...this.state.ProductCard];
-        Cart.push(product);
-        this.setState({ ProductCard: Cart });
+        if (this.state.ProductCard.includes(product)) {
+            let Cart = [...this.state.ProductCard];
+            const ProductIndex = Cart.indexOf(product);
+            // Проверка - есть ли у продукта в корзине счетчик 
+            // Если его нет - добавить 
+            // Если есть - прибавить один.
+            Cart[ProductIndex].count
+                ? (Cart[ProductIndex].count += 1)
+                : (Cart[ProductIndex].count = 1);
+            this.setState({ ProductCard: Cart });
+        } else {
+            let Cart = [...this.state.ProductCard];
+            Cart.push(product);
+            this.setState({ ProductCard: Cart });
+        }
+    }
+    checkThatProductInCart(product) {
+        let Cart = this.state.ProductCard;
+        if (Cart.includes(product)) {
+            console.log("Includes.");
+        } else {
+            console.log("Not includes.");
+        }
     }
 
     render() {
@@ -64,7 +83,7 @@ class App extends Component {
                                     </p>
                                 );
                             })}
-                        <ProductCart ProductCard ={this.state.ProductCard}/>
+                            <ProductCart ProductCard={this.state.ProductCard} />
                         </div>
                     </div>
                     <Routes>
@@ -73,7 +92,6 @@ class App extends Component {
                             element={
                                 <AllProductsComponent
                                     fetchLink={this.state.fetchLink}
-                                    AddToCard={this.AddToCard}
                                 />
                             }
                         ></Route>
@@ -84,7 +102,12 @@ class App extends Component {
                         <Route
                             path="/:Key"
                             element={
-                                <ProductDetail AddToCard={this.AddToCard} />
+                                <ProductDetail
+                                    AddToCard={this.AddToCard}
+                                    CheckProductCard={
+                                        this.checkThatProductInCart
+                                    }
+                                />
                             }
                         ></Route>
                     </Routes>
