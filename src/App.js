@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import "./App.css";
 import { HashRouter, Link, Routes, Route } from "react-router-dom";
 import AllProductsComponent from "./components/AllProductsComponent/AllProductsComponent";
-import RegistrationScreen from "./components/RegistrationScreen/RegistrationScreen";
 import ProductCart from "./components/ProductCart/ProductCart";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
+import Search from "./components/Search/Search";
 
 class App extends Component {
     constructor(props) {
@@ -13,9 +13,31 @@ class App extends Component {
             categories: [],
             fetchLink: "https://fakestoreapi.com/products",
             ProductCard: [],
+            AllProducts: [],
+            AllProductsBackup: [], 
         };
         this.AddToCard = this.AddToCard.bind(this);
-        this.checkThatProductInCart = this.checkThatProductInCart.bind(this);
+        this.IncrementProductInCard = this.IncrementProductInCard.bind(this);
+        this.DecrementProductInCard = this.DecrementProductInCard.bind(this);
+        this.FetchAllProducts = this.FetchAllProducts.bind(this);
+        this.StateforSearch = this.StateforSearch.bind(this);
+    }
+    FetchAllProducts() {
+        const FetchAllProdcuts = fetch("https://fakestoreapi.com/products")
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({ AllProducts: json });
+                this.setState({ AllProductsBackup: json })
+            });
+    }
+    FetchProductsByCatergory(item) {
+        const FetchAllProdcuts = fetch(
+            `https://fakestoreapi.com/products/category/${item}`
+        )
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({ AllProducts: json });
+            });
     }
     componentDidMount() {
         const fetchCategories = fetch(
@@ -25,31 +47,41 @@ class App extends Component {
             .then((json) => {
                 this.setState({ categories: json });
             });
+        this.FetchAllProducts();
     }
     AddToCard(product) {
+        if (!product.count) {
+            product.count = 1;
+        }
+        let Cart = [...this.state.ProductCard];
         if (this.state.ProductCard.includes(product)) {
-            let Cart = [...this.state.ProductCard];
             const ProductIndex = Cart.indexOf(product);
-            // Проверка - есть ли у продукта в корзине счетчик 
-            // Если его нет - добавить 
-            // Если есть - прибавить один.
-            Cart[ProductIndex].count
-                ? (Cart[ProductIndex].count += 1)
-                : (Cart[ProductIndex].count = 1);
+            Cart[ProductIndex].count += 1;
             this.setState({ ProductCard: Cart });
         } else {
-            let Cart = [...this.state.ProductCard];
             Cart.push(product);
             this.setState({ ProductCard: Cart });
         }
     }
-    checkThatProductInCart(product) {
-        let Cart = this.state.ProductCard;
-        if (Cart.includes(product)) {
-            console.log("Includes.");
-        } else {
-            console.log("Not includes.");
+    IncrementProductInCard(productID) {
+        let Cart = [...this.state.ProductCard];
+        let CurrentProduct = Cart.find((el) => el.id === productID);
+        CurrentProduct.count += 1;
+        this.setState({ ProductCard: Cart });
+    }
+    DecrementProductInCard(productID) {
+        let Cart = [...this.state.ProductCard];
+        let CurrentProduct = Cart.find((el) => el.id === productID);
+        CurrentProduct.count -= 1;
+        if (CurrentProduct.count == 0) {
+            const CurrentProductIndex = Cart.indexOf(CurrentProduct);
+            Cart.splice(CurrentProductIndex, 1);
         }
+        this.setState({ ProductCard: Cart });
+    }
+    StateforSearch(SearchResult) {
+        this.setState({ AllProducts: SearchResult });
+
     }
 
     render() {
@@ -61,9 +93,7 @@ class App extends Component {
                             to="/"
                             className="logo"
                             onClick={() => {
-                                this.setState({
-                                    fetchLink: `https://fakestoreapi.com/products`,
-                                });
+                                this.FetchAllProducts();
                             }}
                         >
                             Fake shop
@@ -74,16 +104,27 @@ class App extends Component {
                                     <p
                                         key={item}
                                         onClick={() => {
-                                            this.setState({
-                                                fetchLink: `https://fakestoreapi.com/products/category/${item}`,
-                                            });
+                                            this.FetchProductsByCatergory(item);
                                         }}
                                     >
                                         {item}
                                     </p>
                                 );
                             })}
-                            <ProductCart ProductCard={this.state.ProductCard} />
+                            <ProductCart
+                                ProductCard={this.state.ProductCard}
+                                IncrementProductInCard={
+                                    this.IncrementProductInCard
+                                }
+                                DecrementProductInCard={
+                                    this.DecrementProductInCard
+                                }
+                            />
+                            <Search
+                                AllProducts={this.state.AllProducts}
+                                AllProductsBackup={this.state.AllProductsBackup}
+                                StateforSearch={this.StateforSearch}
+                            />
                         </div>
                     </div>
                     <Routes>
@@ -91,22 +132,16 @@ class App extends Component {
                             path="/"
                             element={
                                 <AllProductsComponent
-                                    fetchLink={this.state.fetchLink}
+                                    AllProducts={this.state.AllProducts}
                                 />
                             }
-                        ></Route>
-                        <Route
-                            path="/Register"
-                            element={<RegistrationScreen />}
                         ></Route>
                         <Route
                             path="/:Key"
                             element={
                                 <ProductDetail
                                     AddToCard={this.AddToCard}
-                                    CheckProductCard={
-                                        this.checkThatProductInCart
-                                    }
+                                    AllProducts={this.state.AllProducts}
                                 />
                             }
                         ></Route>

@@ -6,13 +6,15 @@ export default function ProductDetail(props) {
     let { Key } = useParams();
     let [ProductInfo, setProductInfo] = useState({});
     useEffect(() => {
-        fetch(`https://fakestoreapi.com/products/${Key}`)
-            .then((res) => res.json())
-            .then((json) => {
-                setProductInfo(json);
-            });
+           fetch(`https://fakestoreapi.com/products/${Key}`)
+               .then((res) => res.json())
+               .then((json) => {
+                   setProductInfo(json);
+               });
+        // let CurrentProduct = props.AllProducts.find(el => el.id == Key)
+        // setProductInfo({...CurrentProduct})
+        // console.log(ProductInfo)
     }, []);
-
     return (
         <div className="ProductDetail">
             <img
@@ -31,7 +33,6 @@ export default function ProductDetail(props) {
                 </div>
                 <p className="ProductInformationPrice">${ProductInfo.price}</p>
                 <input type="button" value="add to cart" onClick={(e)=>{props.AddToCard(ProductInfo)}}/>
-                <input type="button" value='checkProcductCart' onClick={(e)=>{ props.CheckProductCard(ProductInfo) }} />
             </div>
         </div>
     );
