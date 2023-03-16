@@ -2,4 +2,10 @@
 .Search{ 
 /*place style here */
 }
+.Search > input { 
+    border:none;
+    box-shadow: 0px 0px 10px lightgray;
+    outline:none;
+    height: 25px;
+}
 

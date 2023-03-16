@@ -21,7 +21,7 @@ export default function ProductCart(props) {
                 Cart({props.ProductCard.length})
             </p>
             <div className="ProductCardWindow" ref={ProductCardWindowRef}>
-                <p>Total: {total.toFixed(1)}</p>
+                <p>Total: ${total}</p>
                 {props.ProductCard.map((item) => {
                     return (
                         <div className="ProductCardItem" key={item.id}>

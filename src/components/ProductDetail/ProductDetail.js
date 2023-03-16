@@ -32,7 +32,7 @@ export default function ProductDetail(props) {
                     <p>{ProductInfo.description}</p>
                 </div>
                 <p className="ProductInformationPrice">${ProductInfo.price}</p>
-                <input type="button" value="add to cart" onClick={(e)=>{props.AddToCard(ProductInfo)}}/>
+                <input className="ProductInformationAddProductToCart" type="button" value="add to cart" onClick={(e)=>{props.AddToCard(ProductInfo)}}/>
             </div>
         </div>
     );

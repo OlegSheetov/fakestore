@@ -3,7 +3,8 @@
     align-items:center;
     justify-content:center;
     box-sizing:border-box;
-    background-color: gray;
+    background-color: white;
+    box-shadow: 0px 0px 50px lightgray;
     color: black;
     cursor:pointer;
 }
@@ -12,15 +13,23 @@
     box-sizing:border-box;
 }
 .ProductCardWindow{ 
+    width:200px;
     display:none;
-    background-color: lightgray;
+    background-color: white;
+    box-shadow:0px 0px 50px lightgray;
     position:absolute; 
-    top: 150%;
-    right: 20%;
+    top: 100%;
+    right: 8%;
+    padding: 10px;
 }
 .ProductCardItem{
     display:flex;
     flex-direction:row;
+    border: 1px solid lightgray;
+    border-radius:5px;
+    margin: 2px;
+    padding:2px;
+
 }
 .ProductCardItem > * { 
     width: 50%;
@@ -32,7 +41,12 @@
 }
 
 .ProductCardItem > div > input { 
-    width:50px;
+    text-align:center;
+    width:20px;
     height:20px;
+    border:none;
+}
+.ProductCardItem > div> input:nth-child(2){ 
+    width:40px;
 }
 
