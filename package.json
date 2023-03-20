@@ -1,7 +1,7 @@
 {
+  "homepage": "https://OlegSheetov.github.io/olegsheetov.FakeShop.io/", 
   "name": "fakeinternetshop",
   "version": "0.1.0",
-  "homepage": "https://olegsheetov.github.io/FakeShop.io", 
   "private": true,
   "dependencies": {
     "generate-react-cli": "^8.2.0",

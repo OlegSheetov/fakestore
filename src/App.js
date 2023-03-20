@@ -6,6 +6,7 @@ import ProductCart from "./components/ProductCart/ProductCart";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import Search from "./components/Search/Search";
 
+
 class App extends Component {
     constructor(props) {
         super(props);
